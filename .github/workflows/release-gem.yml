@@ -39,7 +39,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: false
+          bundler-cache: false  # Avoid caching issues
           ruby-version: "3.3"
 
       - name: Install gem-release
@@ -51,7 +51,7 @@ jobs:
       - name: Clear Bundler cache
         run: |
           bundle config set frozen false
-          rm -rf vendor/bundle .bundle Gemfile.lock
+          rm -rf vendor/bundle .bundle Gemfile.lock  # Ensure clean install
 
       - name: Set Bundler Path
         run: bundle config set --local path 'vendor/bundle'
@@ -66,13 +66,13 @@ jobs:
 
       - name: Pull Latest Changes
         run: |
-          git pull --rebase || echo "Skipping rebase; pulling without rebase"
-          git pull --no-rebase
+          git pull --rebase origin main || echo "Skipping rebase; pulling without rebase"
+          git pull --no-rebase origin main
 
-      - name: Push Changes (if any)
+      - name: Push Changes
         run: |
           if ! git diff --quiet; then
-            git push origin ${{ github.ref_name }}
+            git push origin main
           else
             echo "No changes to push."
           fi
