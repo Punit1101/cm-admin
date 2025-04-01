@@ -57,17 +57,22 @@ jobs:
       - name: Bundle Install
         run: bundle install --jobs 4 --retry 3  # Retry in case of failures
 
+      - name: Commit Changes Before Pull
+        run: |
+          git add Gemfile.lock
+          git commit -m "Update Gemfile.lock after bundle install" || echo "No changes to commit"
+
       - name: Git Pull latest changes
-        run: git pull --rebase
+        run: |
+          git pull --rebase || (echo "Skipping rebase due to local changes"; git pull --no-rebase)
 
-      - name: Git Add files
-        run: git add Gemfile.lock
-
-      - name: Git Commit
-        run: git commit -m "Update Gemfile.lock after bundle install" || echo "No changes to commit"
-
-      - name: Push the new version
-        run: git push origin ${{ github.ref_name }}
+      - name: Check if changes exist before pushing
+        run: |
+          if ! git diff --quiet; then
+            git push origin ${{ github.ref_name }}
+          else
+            echo "No changes to push."
+          fi
 
   release:
     name: Release gem
