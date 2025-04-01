@@ -1,4 +1,4 @@
-name: Bump Gem
+name: Bump Gem  # Workflow name
 
 on:
   workflow_dispatch:
@@ -95,13 +95,22 @@ jobs:
       - name: Install Dependencies
         run: bundle install --jobs 4 --retry 3
 
-      - name: Commit Pending Changes
+      - name: Ensure All Pending Changes Are Committed
         run: |
           git add .
-          git commit -m "Auto-commit untracked changes before releasing gem" || echo "No changes to commit"
+          git commit -m "Commit pending changes before releasing gem" || echo "No changes to commit"
 
       - name: Push Committed Changes
-        run: git push origin main || echo "No changes to push"
+        run: |
+          git push origin main || (echo "Push failed; retrying with rebase..." && git pull origin main --rebase && git push origin main)
+
+      - name: Double-check for Clean Working Directory
+        run: |
+          if [[ $(git status --porcelain) ]]; then
+            echo "Error: Uncommitted changes detected!" && exit 1
+          else
+            echo "Working directory is clean. Proceeding with gem release."
+          fi
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
