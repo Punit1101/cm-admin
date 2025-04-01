@@ -39,7 +39,6 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: false  # Avoid caching issues
           ruby-version: "3.3"
 
       - name: Install gem-release
@@ -97,10 +96,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
-          bundler-cache: false
 
-      - name: Clear Bundler Config Lock
-        run: bundle config set frozen false
+      - name: Install Dependencies
+        run: bundle install --jobs 4 --retry 3
+
+      - name: Clean Up Gems
+        run: gem pristine --all
+
+      - name: Reset Bundler Configurations
+        run: bundle config set --local path 'vendor/bundle'
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
