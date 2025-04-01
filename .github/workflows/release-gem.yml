@@ -42,10 +42,11 @@ jobs:
           bundler-cache: false  # Avoid caching issues
           ruby-version: "3.3"  # Explicit version for better compatibility
 
-      - name: Install Bundler and Dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
+      - name: Fix permissions issue
+        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/3.3.7/x64/lib/ruby/gems/3.3.0/gems
+
+      - name: Install Bundler
+        run: gem install bundler
 
       - name: Install the gem-release
         run: gem install gem-release
@@ -102,11 +103,6 @@ jobs:
 
       - name: Remove lock on bundle
         run: bundle config set frozen false
-
-      - name: Install Bundler and Dependencies
-        run: |
-          gem install bundler
-          bundle install --jobs 4 --retry 3
 
       - uses: rubygems/release-gem@v1
         with:
