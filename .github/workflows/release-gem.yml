@@ -47,26 +47,16 @@ jobs:
       - name: Bump the gem
         run: gem bump --version ${{ github.event.inputs.bump_type }} -p
 
-      - name: Clear Bundler cache
+      - name: Pull Latest Changes
         run: |
-          bundle config set frozen false
-          rm -rf vendor/bundle .bundle Gemfile.lock  # Ensure clean install
-
-      - name: Set Bundler Path
-        run: bundle config set --local path 'vendor/bundle'
-
-      - name: Bundle Install
-        run: bundle install --jobs 4 --retry 3
+          git fetch origin main
+          git pull origin main --rebase || echo "Skipping rebase; attempting to merge"
+          git merge origin/main || echo "Auto-merge failed, manual merge required"
 
       - name: Commit Updated Gemfile.lock
         run: |
           git add Gemfile.lock
           git commit -m "Update Gemfile.lock after bundle install" || echo "No changes to commit"
-
-      - name: Pull Latest Changes
-        run: |
-          git pull --rebase origin main || echo "Skipping rebase; pulling without rebase"
-          git pull --no-rebase origin main
 
       - name: Push Changes
         run: |
@@ -99,12 +89,6 @@ jobs:
 
       - name: Install Dependencies
         run: bundle install --jobs 4 --retry 3
-
-      - name: Clean Up Gems
-        run: gem pristine --all
-
-      - name: Reset Bundler Configurations
-        run: bundle config set --local path 'vendor/bundle'
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
