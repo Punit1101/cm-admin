@@ -50,7 +50,8 @@ jobs:
       - name: Pull Latest Changes
         run: |
           git fetch origin main
-          git pull origin main --rebase || git pull --no-rebase origin main
+          git pull origin main --rebase || echo "Rebase failed, attempting merge"
+          git merge origin/main || echo "Merge failed; manual intervention required"
 
       - name: Commit Updated Files
         run: |
@@ -59,7 +60,7 @@ jobs:
 
       - name: Push Changes
         run: |
-          git push origin main || (git pull --rebase origin main && git push origin main)
+          git push origin main || (echo "Push failed; retrying after rebase" && git pull origin main --rebase && git push origin main)
 
   release:
     name: Release gem
