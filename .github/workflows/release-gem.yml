@@ -83,25 +83,8 @@ jobs:
         with:
           ruby-version: "3.3"
 
-      - name: Fix Permissions for Gem Installation Path
-        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/3.3.7/x64/lib/ruby/gems/3.3.0/gems
-
-      - name: Configure Bundler to Use a Secure Local Path
-        run: bundle config set --local path 'vendor/bundle'
-
-      - name: Preconfigure Nokogiri and Other Gems
-        run: bundle config set force_ruby_platform true
-
       - name: Install Dependencies
         run: bundle install --jobs 4 --retry 3
-
-      - name: Commit Pending Changes
-        run: |
-          git add .
-          git commit -m "Auto-commit untracked changes before releasing gem" || echo "No changes to commit"
-
-      - name: Push Committed Changes
-        run: git push origin main || echo "No changes to push"
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
