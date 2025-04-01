@@ -103,7 +103,5 @@ jobs:
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
-        with:
-          await-release: true
         env:
           RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }} 
