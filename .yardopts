@@ -1,0 +1,4 @@
+lib/cm_admin/models/dsl_method.rb
+-
+docs/**.md
+docs/**.rb

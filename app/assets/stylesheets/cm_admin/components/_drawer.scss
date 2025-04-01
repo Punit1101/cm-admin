@@ -1,0 +1,27 @@
+.cm-drawer {
+  @extend .offcanvas-end;
+  width: 640px !important;
+}
+
+.offcanvas-body {
+  padding: 0;
+}
+
+.drawer-btn {
+  @extend .btn-link;
+  margin-left: auto;
+  margin-bottom: 0;
+  font-size: $t3-text !important;
+}
+
+.drawer-btn-group {
+  @extend .d-flex, .flex-column, .gap-2;
+  position: absolute;
+  margin: 16px 0 0 -47px;
+}
+
+.drawer-nav-btn {
+  @extend .btn-ghost;
+  width: 31px;
+  height: 31px;
+}

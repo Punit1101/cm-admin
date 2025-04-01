@@ -1,0 +1,317 @@
+.cm-index-page {
+  background-color: $white;
+  overflow: auto;
+
+  &.associated-index {
+    background-color: transparent;
+  }
+
+  .sticky-container {
+    .cm-filters-v2 {
+      padding: 16px 24px;
+    }
+  }
+
+  &__filters {
+    // If you want to overwrite filters styles ---> add styles here
+  }
+
+  &__table-container {
+    padding-left: 24px;
+  }
+
+  .table-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    padding: 21px 24px 21px 0;
+    background-color: transparent;
+    &__total-count {
+      @include font($size: $t4-text, $color: $ink-lighter-clr);
+      line-height: 22px;
+      margin: 0;
+    }
+  }
+
+  // Table UI v2
+  .table-wrapper {
+    min-width: 720px;
+    max-width: fit-content;
+    max-height: calc(100vh - 240px);
+    overflow: auto;
+    .index-table {
+      @extend .table, .table-hover;
+      border: 1px solid $grey-lighter-clr;
+      position: relative;
+      min-width: 720px;
+      margin: 0;
+      thead {
+        position: sticky;
+        top: 0;
+        z-index: 4;
+        background-color: $white;
+        th {
+          font-size: 12px;
+          min-width: 120px;
+          max-width: 240px;
+        }
+        th:nth-child(1) {
+          position: sticky;
+          left: 0;
+          z-index: 2;
+          background-color: $white;
+        }
+      }
+
+      [data-field-type="action-cell-th"] {
+        min-width: 60px;
+        max-width: 60px;
+      }
+
+      tbody {
+        tr {
+          border-bottom: 1px solid var(--bs-border-color);
+          &:hover {
+            .row-action-tool {
+              display: inline;
+            }
+          }
+        }
+
+        td {
+          font-size: $t4-text;
+          min-width: 120px;
+          max-width: 240px;
+        }
+        td:nth-child(1) {
+          position: sticky;
+          left: 0;
+          z-index: 2;
+          background-color: $white;
+        }
+      }
+
+      .check-box-space {
+        min-width: 32px;
+        max-width: 32px;
+        font-size: $t4-text;
+      }
+
+      .row-action-cell {
+        position: sticky;
+        right: 0;
+        max-width: inherit;
+        min-width: inherit;
+        padding: 4px;
+        z-index: 3 !important;
+        background: transparent;
+        .row-action-tool {
+          display: none;
+          position: relative;
+          .popup-card {
+            .popup-option {
+              a {
+                @include font(
+                  $size: $t4-text,
+                  $color: $ink-regular-clr,
+                  $weight: 500
+                );
+                line-height: 22px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    [data-bulk-actions="present"] {
+      thead {
+        th:nth-child(1) {
+          position: sticky;
+          left: 0;
+          z-index: 2;
+          background-color: $white;
+        }
+        th:nth-child(2) {
+          position: sticky;
+          left: 32px;
+          z-index: 2;
+          background-color: $white;
+        }
+      }
+      tbody {
+        td:nth-child(1) {
+          position: sticky;
+          left: 0;
+          z-index: 2;
+          background-color: $white;
+        }
+        td:nth-child(2) {
+          position: sticky;
+          left: 32px;
+          z-index: 2;
+          background-color: $white;
+        }
+      }
+    }
+  }
+
+  // table-column-modal
+  .table-column-modal {
+    //modal overwritten styles
+    .modal-dialog {
+      .modal-content {
+        .modal-header {
+          position: relative;
+          padding: 24px 32px 18px;
+          border: none;
+          box-shadow: inset 0px -1px 0px rgba(148, 151, 155, 0.15);
+          .modal-title {
+            @include font($size: 24px, $color: $primary-text-clr, $weight: 600);
+            line-height: 32px;
+          }
+          .close {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            padding: 4px;
+            margin: 0;
+          }
+        }
+        .modal-body {
+          padding: 0;
+        }
+        .modal-footer {
+          padding: 16px 32px;
+          border: none;
+          box-shadow: inset 0px 1px 0px rgba(148, 151, 155, 0.15);
+        }
+      }
+    }
+
+    .columns-list {
+      .column-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 24px;
+        box-shadow: inset 0px -1px 0px rgba(148, 151, 155, 0.15);
+        &:hover {
+          .dragger {
+            display: block;
+          }
+        }
+        &__name {
+          @include font($size: $t4-text, $color: $primary-text-clr);
+          line-height: 22px;
+          margin-left: 4px;
+          p {
+            margin: 0;
+          }
+        }
+        &__action {
+          padding: 5px 8px;
+          @include font($size: $t4-text, $color: $ink-lightest-clr);
+        }
+        .dragger {
+          display: none;
+          position: absolute;
+          left: 4px;
+          top: 8px;
+          padding: 5px;
+          color: $ink-lightest-clr;
+          border-radius: $radius-4;
+          animation: fadeIn 0.1s ease-in-out;
+          cursor: grab;
+          &:hover {
+            background: $grey-lighter-clr;
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-bar {
+    @extend .position-sticky,
+      .bottom-0,
+      .start-0,
+      .d-flex,
+      .justify-content-between,
+      .align-items-center,
+      .w-100,
+      .py-2,
+      .px-4,
+      .bg-white !optional;
+    bottom: 0;
+    left: 0;
+    border: 1px solid $grey-lighter-clr;
+    box-shadow: 0px 1px 0px 0px rgba(148, 151, 155, 0.3) inset;
+    z-index: 2;
+    .count-text {
+      @include font($size: $t4-text, $color: var(--bs-body-color));
+    }
+    .pagination-actions {
+      @extend .pagination;
+      gap: 4px;
+      span {
+        @extend .d-inline-flex;
+      }
+    }
+  }
+
+  .kanban-pagination {
+    justify-content: center !important;
+  }
+}
+
+[data-field-type="money"] {
+  text-align: right;
+}
+
+//Nested show table styles
+.nested-table-wrapper {
+  overflow-y: scroll;
+  .nested-table {
+    @extend .table, .table-light, .table-hover, .table-bordered;
+    width: max-content;
+  }
+  th,
+  td {
+    min-width: 120px;
+    max-width: 240px;
+  }
+}
+
+//Nested form table styles
+.nested-form-table-wrapper {
+  overflow-y: scroll;
+  .nested-form-table {
+    @extend .table, .table-light, .table-hover, .table-bordered, .m-0;
+    width: max-content;
+    .item-delete-cell {
+      vertical-align: middle;
+      text-align: center;
+    }
+  }
+  th:nth-child(1) {
+    min-width: 47px;
+    max-width: 47px;
+  }
+  td:nth-child(1) {
+    min-width: 47px;
+    max-width: 47px;
+  }
+  th,
+  td {
+    min-width: 120px;
+    max-width: 240px;
+  }
+}
+
+.nested-table-footer {
+  padding: 8px;
+  border: 1px solid var(--bs-border-color);
+  border-top: 0;
+}

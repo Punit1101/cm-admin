@@ -1,0 +1,6 @@
+- if flash[:notice].present?
+  = toast_message(flash[:notice], 'notice')
+- elsif flash[:success].present?
+  = toast_message(flash[:success], 'success')
+- elsif flash[:alert].present?
+  = toast_message(flash[:alert], 'alert')

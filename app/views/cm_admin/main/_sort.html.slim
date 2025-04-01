@@ -1,0 +1,27 @@
+- sort_column = params[:sort_column] || model.default_sort_column
+- sort_direction = params[:sort_direction] || model.default_sort_direction
+.dropdown
+  button.sort-button data-bs-toggle="dropdown"
+    - if sort_column.present?
+      span
+        - if sort_direction == 'asc'
+          i.fa-duotone.fa-solid.fa-arrow-up-short-wide
+        - else
+          i.fa-duotone.fa-solid.fa-arrow-down-short-wide
+      = "#{model.sort_columns.find{ |c| c[:column] == sort_column }[:display_name]}"
+    - else
+      span
+        i.fa-solid.fa-arrow-down-arrow-up
+      | Sort
+  .dropdown-menu.sort-menu
+    div.sort-menu__top
+      = select_tag 'sort_column', options_for_select([['Select Column', '']] + model.sort_columns.map { |column| [column[:display_name], column[:column]] }, selected: sort_column), { class: 'form-select form-select-sm', data: { behaviour: 'sort-column' } }
+      .div.btn-group role="group"
+        input.btn-check type="radio" name="sort_direction" id="asc" value="asc" autocomplete="off" data-behaviour="sort-direction" checked=(sort_direction.blank? ? true : (sort_direction == 'asc' ? true : nil))
+        label.btn.btn-outline-dark.btn-sm for="asc" Ascending
+
+        input.btn-check type="radio" name="sort_direction" id="desc" value="desc" autocomplete="off" data-behaviour="sort-direction" checked=(sort_direction == 'desc' ? true : nil)
+        label.btn.btn-outline-dark.btn-sm for="desc" Descending
+    .sort-menu__bottom
+      button.btn.btn-sm.btn-ghost data-behaviour="reset-sort"
+        | Reset

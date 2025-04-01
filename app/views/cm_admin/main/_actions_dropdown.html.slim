@@ -1,0 +1,49 @@
+- edit_action = available_actions(cm_model, ar_object, 'edit')
+- destroy_action = available_actions(cm_model, ar_object, 'destroy')
+- custom_actions = available_actions(cm_model, ar_object, 'custom_actions')
+- current_model = @associated_model || @model
+- if custom_actions.map { |custom_action| custom_action.display_if.call(ar_object) }.any? || edit_action.present? || destroy_action.present?
+  td.row-action-cell
+    .row-action-tool
+      button.btn-ghost.dropdown-toggle
+        span
+          i.fa.fa-bars.bolder
+      .popup-card.table-export-popup.hidden
+        - if edit_action.present?
+          - if @associated_model
+            - path = cm_admin.send("#{current_model.name.underscore}_edit_path", ar_object, referrer: request.path)
+          - else
+            - path = cm_admin.send("#{current_model.name.underscore}_edit_path", ar_object)
+          = link_to path do
+            .popup-option
+              span
+                i.fa.fa-edit
+              | Edit
+        - if destroy_action.present?
+          - if @associated_model
+            = button_to cm_admin.send("#{current_model.name.underscore}_destroy_path", ar_object, referrer: request.path), method: :delete, form: { data: { turbo_confirm: 'Are you sure?' } } do
+              .popup-option
+                span
+                  i.fa.fa-trash
+                | Destroy
+          - else
+            div data={action: 'fetch-modal', model_name: "#{cm_model.name.underscore.pluralize}", action_name: "destroy", record_id: "#{ar_object.id.to_s}"}
+              .popup-option
+                span
+                  i.fa.fa-trash
+                | Destroy
+        - custom_actions.each do |custom_action|
+          - if custom_action.display_if.call(ar_object)
+            - case custom_action.display_type
+            - when :button
+              = button_to cm_admin.send("#{cm_model.name.underscore}_index_path") + '/' + custom_action.path.gsub(':id', ar_object.id.to_s), method: custom_action.verb do
+                .popup-option
+                  span
+                    i class="#{custom_action.icon_name}"
+                  = custom_action_title(custom_action)
+            - when :modal
+              div data={action: 'fetch-modal', model_name: "#{cm_model.name.underscore.pluralize}", action_name: "#{custom_action.name}", record_id: "#{ar_object.id.to_s}"}
+                .popup-option
+                  span
+                    i class="#{custom_action.icon_name}"
+                  = custom_action_title(custom_action)

@@ -1,0 +1,36 @@
+.alert {
+  .alert-banner-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .alert-banner-icon {
+      margin: 1px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    .alert-banner-content {
+      margin-left: 10px;
+      display: flex;
+      flex-direction: column;
+
+      .alert-banner-header {
+        p {
+          font-size: 1.1rem;
+          font-weight: bold;
+          margin-bottom: 0;
+        }
+      }
+
+      .alert-banner-text {
+        p.mb-0 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

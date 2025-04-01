@@ -1,0 +1,82 @@
+@import "../helpers/index.scss";
+
+.status-tag {
+  @extend .badge;
+  &.active {
+    background: var(--blue-100, #e7f1ff);
+    color: var(--blue-700, #084298);
+  }
+  &.active-one {
+    background: var(--Blue-100, #e7f1ff);
+    color: var(--Blue-700, #084298);
+  }
+  &.active-two {
+    background: var(--Yellow-100, #fff3cd);
+    color: var(--Yellow-700, #997404);
+  }
+  &.active-three {
+    background: var(--Orange-100, #ffe5d0);
+    color: var(--Orange-700, #984c0c);
+  }
+  &.active-four {
+    background: var(--Indigo-100, #e0cffc);
+    color: var(--Indigo-700, #3d0a91);
+  }
+  &.active-five {
+    background: var(--Cyan-100, #cff4fc);
+    color: var(--Cyan-700, #087990);
+  }
+  &.completed {
+    background: var(--green-100, #d1e7dd);
+    color: var(--green-700, #0f5132);
+  }
+  &.neutral {
+    background: var(--bs-gray-300);
+    color: var(--bs-gray-700);
+  }
+  &.danger {
+    background: var(--red-100, #f8d7da);
+    color: var(--red-700, #842029);
+  }
+}
+
+.filter-chip {
+  display: inline-block;
+  position: relative;
+  padding: 5px 16px;
+  font-size: $t4-text;
+  font-weight: 600;
+  line-height: 22px;
+  border: 1px solid $ink-regular-clr;
+  border-radius: $radius-4;
+  @include transition-linear;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: $grey-lighter-clr;
+    .filter-chip-remove {
+      display: block;
+    }
+  }
+  span:nth-child(1) {
+    color: $ink-lighter-clr;
+  }
+  span:nth-child(2) {
+    color: $ink-regular-clr;
+  }
+  .filter-chip-remove {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4px 16px;
+    background: $gradient-one;
+    border-radius: $radius-4;
+    i {
+      font-size: 10px;
+      line-height: 12px;
+      text-align: center;
+      color: $ink-lighter-clr;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+@import "helpers/index.scss";
+
+.nested-field-wrapper {
+  label {
+    font-size: $t4-text;
+    margin-bottom: 16px;
+  }
+  .nested-fields {
+    margin-bottom: 16px;
+  }
+}
+
+.ink-light-clr {
+  color: $ink-lighter-clr;
+}

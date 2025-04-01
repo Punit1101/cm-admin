@@ -1,0 +1,93 @@
+/* ==== Color Variables ==== */
+
+/* Brand Color */
+$brand-color: #6554e0;
+$brand-hover-color: #e6e4fa;
+
+/* Semantic Color */
+$informative-clr: #2f80ed;
+$error-clr: #f83636;
+$warning-clr: #ffc845;
+$positive-clr: #30c39e;
+$disabled-clr: #9ca7ae;
+
+/* Blue Colors */
+$blue-regular-clr: #2f80ed;
+$blue-light-clr: #cde1fb;
+$blue-lightest-clr: #eef5fe;
+
+/* Red Colors */
+$red-regular-clr: #f83636;
+$red-light-clr: #fdcfcf;
+$red-lightest-clr: #feefef;
+
+/* Yellow Colors */
+$yellow-regular-clr: #ffc845;
+$yellow-light-clr: #ffefc7;
+$yellow-lightest-clr: #fff8e9;
+
+/* Green Colors */
+$green-regular-clr: #30c39e;
+$green-light-clr: #c1ede2;
+$green-lightest-clr: #eefaf7;
+
+/* Grey Colors */
+$grey-regular-clr: #c7ced5;
+$grey-light-clr: #d9dee3;
+$grey-lighter-clr: #f3f4f6;
+$grey-lightest-clr: #f8f9fa;
+$grey-dark-clr: #828282;
+$card-grey-lighter-clr: #f3f4f6;
+
+/* Ink Colors */
+$ink-regular-clr: #1d2129;
+$ink-light-clr: #3b4352;
+$ink-lighter-clr: #6b7586;
+$ink-lightest-clr: #9ca7ae;
+
+/* Text Colors */
+$primary-text-clr: #1d2129;
+$subdued-text-clr: #d9dee3;
+
+/* Common Colors */
+$white: #ffffff;
+$black: #000000;
+
+// Gradient Colors
+$gradient-one: linear-gradient(270deg, $grey-lighter-clr 81.75%, rgba(243, 244, 246, 0) 100%);
+$cta-hover-gradient: linear-gradient(0deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0.24)), $brand-color;
+
+/* Typography */
+$primary-font: "Open Sans", sans-serif;
+$font-size: (
+  24: 24px,
+  18: 18px,
+  16: 16px,
+  14: 14px,
+  12: 12px
+);
+$t1-text: 20px;
+$t2-text: 18px;
+$t3-text: 16px;
+$t4-text: 14px;
+$t5-text: 13px;
+$t6-text: 12px;
+
+/* font weights */
+$font-weight: (
+  "regular": 400,
+  "medium": 500,
+  "bold": 600,
+  "bolder": 900
+);
+
+/* Border-radius */
+$radius-0: 0;
+$radius-1: 1px;
+$radius-2: 2px;
+$radius-3: 3px;
+$radius-4: 4px;
+$radius-5: 5px;
+$radius-6: 6px;
+$radius-8: 8px;
+$circle: 50%;

@@ -1,0 +1,48 @@
+@import "../helpers/index";
+
+// New alert styles
+.cm-admin .alert {
+  @extend .alert-dismissible, .d-flex, .align-items-center;
+}
+
+//Old alert styles
+.flag-alert {
+  max-width: 752px;
+  padding: 24px;
+  background: $red-lightest-clr;
+  border-radius: $radius-4;
+  .alert-header {
+    @include font($size: $t6-text, $color: $red-regular-clr, $weight: bold);
+    line-height: 16px;
+    text-transform: uppercase;
+    margin: 0;
+    span {
+      margin-right: 4px;
+    }
+  }
+  .alert-body {
+    margin-top: 16px;
+    .body-title {
+      @include font($size: $t3-text, $color: $primary-text-clr, $weight: bold);
+      line-height: 24px;
+      margin: 0 0 8px;
+    }
+    .body-info {
+      @include font($size: $t4-text, $color: $primary-text-clr);
+      line-height: 22px;
+      margin: 0;
+    }
+    .body-list-info {
+      padding-inline-start: 20px;
+      margin: 0;
+      li {
+        @include font($size: $t4-text, $color: $primary-text-clr);
+        line-height: 22px;
+        margin-bottom: 8px;
+        &:nth-last-child(1) {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

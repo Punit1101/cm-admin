@@ -1,0 +1,7 @@
+@import "../helpers/index";
+
+.cm-admin .accordion {
+  @extend .accordion;
+  --bs-accordion-active-bg: var(--bs-gray-100);
+  --bs-accordion-btn-bg: var(--bs-gray-100);
+}

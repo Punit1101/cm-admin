@@ -1,0 +1,36 @@
+.entity-header {
+  @extend .d-flex.justify-content-between.align-items-start.p-4;
+  background-color: var(--bs-white);
+  &__info {
+    .breadcrumb {
+      @include font($size: $t4-text, $color: var(--bs-tertiary-color));
+      line-height: 22px;
+    }
+  }
+
+  &__actions {
+    @extend .d-flex.align-items-start;
+    .export-container {
+      position: relative;
+      .export-popup {
+        top: 45px;
+        width: 156px;
+        padding: 8px 0;
+        animation: fadeIn 0.2s ease-in-out;
+        .popup-option {
+          padding: 8px 16px;
+          @include font($size: $t4-text, $color: $primary-text-clr);
+          line-height: 22px;
+          transition: all 0.2s linear;
+          cursor: pointer;
+          &:hover {
+            background-color: $grey-lighter-clr;
+          }
+          span {
+            margin-right: 8px;
+          }
+        }
+      }
+    }
+  }
+}

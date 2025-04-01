@@ -1,0 +1,38 @@
+.form-page.permission-form
+  .form-page__body
+    .form-container
+      = form_for CmPermission.new, url: cm_admin.send('cm_role_create_role_permission_path', @ar_object), method: :post do |f|
+        - cm_models = CmAdmin.config.cm_admin_models.sort_by{|k, v| k.display_name}
+        - cm_models.each do |model|
+          - next if model.override_policy == true
+          .row
+            .col.form-container
+              p.form-title
+                = model.model_name
+              .form-container__inner
+                .row
+                  .col
+                    .form-field.disabled
+                      .form-check
+                        .permission-form__checkbox-wrapper
+                          - saved_permission = @ar_object.cm_permissions.where(ar_model_name: model.name)
+                          - available_actions = model.available_actions.reject {|x| ['custom_action_modal', 'custom_action', 'create', 'update'].include?(x.name)}
+                          - is_checked = (saved_permission.count >= available_actions.count)
+                          input.form-check-input[type="checkbox" value="" data-behaviour="permission-check-all" checked=is_checked]
+                          .cm-checkbox-label
+                            span.action-name
+                              | All
+                      - model.available_actions.each do |action|
+                        - permission = @ar_object.cm_permissions.where(ar_model_name: model.name, action_name: action.name).first
+                        - unless ['custom_action_modal', 'custom_action', 'create', 'update'].include?(action.name)
+                          .form-check
+                            .permission-form__checkbox-wrapper
+                              input.form-check-input[type="checkbox" value="#{action.name}" checked=permission.present? name="role_permission[#{model.name}][#{action.name}][is_checked]" data-behaviour="permission-check-box"]
+                              .cm-checkbox-label
+                                span.action-name
+                                  = action.display_name || action.name.titleize
+                            .cm-select-tag class="#{permission.present? ? '' : 'hidden'}"
+                              = select_tag(:policy_scope_name, options_for_select(model.policy_scopes.map{|policy_hash| [policy_hash[:display_name], policy_hash[:scope_name]]}, permission&.scope_name), {name: "role_permission[#{model.name}][#{action.name}][scope_name]", class: 'select-2', id: "policy-scope-#{model.name}-#{action.name}"})
+                div
+        = f.submit 'Save Changes', class: "btn-cta"
+        = link_to 'Discard', cm_admin.send('cm_role_index_path'), class: "btn-secondary ml-10"

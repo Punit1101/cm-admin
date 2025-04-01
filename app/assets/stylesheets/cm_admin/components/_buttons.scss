@@ -1,0 +1,43 @@
+@import "../helpers/index.scss";
+
+.btn-icon-spacing {
+  @extend .d-inline-flex, .align-items-center, .justify-content-center;
+  gap: 4px;
+}
+
+// New buttons with bootstrap button styles
+.cm-admin .btn-cta {
+  --bs-btn-color: var(--bs-white) !important;
+  --bs-btn-bg: var(--bs-primary) !important;
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-color: var(--bs-white);
+  --bs-btn-hover-bg: #{shade-color($primary, 10%)};
+  @extend .btn, .btn-sm, .btn-icon-spacing;
+}
+
+.cm-admin .btn-primary {
+  @extend .btn, .btn-outline-primary, .btn-sm, .btn-icon-spacing;
+}
+
+.cm-admin .btn-secondary {
+  @extend .btn, .btn-outline-secondary, .btn-sm, .btn-icon-spacing;
+}
+
+.cm-admin .btn-ghost {
+  @extend .btn, .btn-light, .btn-sm, .btn-icon-spacing;
+}
+
+.cm-admin .btn-danger {
+  @extend .btn, .btn-outline-danger, .btn-sm, .btn-icon-spacing;
+}
+
+.cm-admin .btn-link {
+  @extend .btn, .btn-link, .btn-sm, .btn-icon-spacing;
+  text-decoration: underline;
+}
+
+// button mixin - We can use if needed
+// @include button-variant($background: #6554e0, $border: #6554e0);
+
+//Outline button mixin - We can use if needed
+// @include button-outline-variant($color: #6554e0);

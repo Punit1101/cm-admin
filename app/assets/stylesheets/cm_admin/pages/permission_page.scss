@@ -1,0 +1,28 @@
+.permission-form {
+  // Margin negative since we are using tab as form.
+  margin: -24px !important;
+  .form-container__inner {
+    padding: 16px !important;
+  }
+  .form-check {
+    display: flex;
+    margin-bottom: 16px !important;
+  }
+  .select2-container {
+    width: 124px !important;
+  }
+  &__checkbox-wrapper {
+    padding-top: 6px;
+  }
+
+  .cm-checkbox-label {
+    .action-name {
+      float: left;
+      margin-right: 10px;
+    }
+    .cm-select-tag {
+      float: left;
+    }
+  }
+  
+}

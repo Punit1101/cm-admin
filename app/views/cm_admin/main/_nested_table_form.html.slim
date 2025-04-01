@@ -1,0 +1,37 @@
+- assoc_name = nested_table_field.field_name
+- table_name = f.object._reflections.with_indifferent_access[assoc_name].klass.table_name.to_sym
+- if nested_table_field.display_type == :table
+  .nested-field-wrapper data-table-name=assoc_name data-model-name=assoc_name.to_s.classify
+    / label.field-label = nested_table_field.label.to_s.titleize
+    - uniq_no = Random.rand(10000)
+    .nested-form-table-wrapper
+      table.nested-form-table
+        thead
+          tr
+            - if nested_table_field.is_positionable.call(f.object)
+              th
+                | 
+            - if nested_table_field.is_deletable.call(f.object)
+              th
+                |
+            - nested_table_field.fields.each do |field| 
+              th data-field-type="#{field.input_type}"
+                - if field.label
+                  = field.label.to_s || field.field_name.to_s.titleize 
+        tbody class="insert-cocoon-position-#{uniq_no}" data-section='nested-form-body'
+          = f.fields_for table_name do |record|
+            - if record.object.persisted? || @ar_object.errors.present?
+              = render partial: '/cm_admin/main/nested_fields', locals: { f: record, assoc_name: assoc_name, nested_table_field: nested_table_field }
+    - if f.object._reflections.with_indifferent_access[assoc_name.to_s]&.macro == :has_many && nested_table_field.is_creatable.call(f.object)
+      .nested-table-footer
+        = link_to_add_association "#{nested_table_field.submit_text}", f, table_name, partial: '/cm_admin/main/nested_fields', render_options:  {locals: { assoc_name: assoc_name, nested_table_field: nested_table_field }}, data: { association_insertion_node: ".insert-cocoon-position-#{uniq_no}", association_insertion_method: 'append' }, class: 'btn-primary'
+- else
+  .nested-field-wrapper data-table-name=assoc_name data-model-name=assoc_name.to_s.classify
+    / label.nested-field-label = assoc_name.to_s.titleize
+    .nested-form
+      = f.fields_for table_name do |record|
+        - if record.object.persisted?
+          = render partial: '/cm_admin/main/nested_fields', locals: { f: record, assoc_name: assoc_name, nested_table_field: nested_table_field }
+      - if f.object._reflections.with_indifferent_access[assoc_name.to_s]&.macro == :has_many
+        .links.mt-3
+          = link_to_add_association "#{nested_table_field.submit_text}", f, table_name, partial: '/cm_admin/main/nested_fields', render_options:  {locals: { assoc_name: assoc_name, nested_table_field: nested_table_field }}, class: 'd-inline-block btn-primary mt-2'

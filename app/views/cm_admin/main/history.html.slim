@@ -1,0 +1,35 @@
+.show-page
+  .show-page__header.page-top-bar
+    == render 'cm_admin/main/top_navbar'
+    == render 'cm_admin/main/tabs', via_xhr: false
+  .show-page__inner
+    .card.col-7
+      .card-body
+        ul.history-items-list
+          - @ar_object.versions.each do |version|
+            li.history-item
+              .d-inline-flex.mb-2
+                span.fw-bold.me-1 = User.find_by(id: version.whodunnit).present? ? User.find_by(id: version.whodunnit).full_name : "Anonymous"
+                span.me-1 = version.event
+                span.me-1 the
+                span.fw-bold.me-1 = version.item_type
+                span.text-body-tertiary.me-1 = version.created_at.strftime("%B %d, %Y, %H:%M %p")
+              - if version.event == 'update' && version.changeset.present?
+                .history-details
+                  table.table.table-bordered.table-light style="width: 600px;"
+                    thead
+                      tr
+                        th
+                          | Updated Column
+                        th
+                          | Previous Value
+                        th
+                          | Updated Value
+                    tbody
+                      - version.changeset.each do |key, value|
+                        tr
+                          td = key
+                          td = value[0] || '-'
+                          td = value[1].instance_of?(ActiveSupport::TimeWithZone) ? value[1].strftime("%B %d, %Y, %H:%M %p") : value[1]
+
+

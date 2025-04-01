@@ -1,0 +1,9 @@
+.alert class="alert-#{alert.type}" *alert.html_attrs
+  .alert-banner-body
+    .alert-banner-icon
+      i.fas class="fa-#{icon_class} fs-5 ms-2"
+    .alert-banner-content
+      .alert-banner-header
+        p== alert.header
+      .alert-banner-text
+        p.mb-0== alert.body

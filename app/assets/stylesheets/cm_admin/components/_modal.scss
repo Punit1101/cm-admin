@@ -1,0 +1,11 @@
+@import "../helpers/index.scss";
+
+.custom-modal-body {
+  .modal-info {
+    padding-bottom: 16px;
+  }
+  .modal-footer {
+    margin: 0 -16px;
+    padding-bottom: 0;
+  }
+}

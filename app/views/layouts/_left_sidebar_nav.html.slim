@@ -1,0 +1,30 @@
+.cm-sidebar
+  .cm-sidebar__logo-header
+    = image_tag('/assets/logo.png', alt: 'logo image')
+
+  .cm-sidebar__quick-search
+    span
+      i.fa.fa-search
+    input data-bs-target="#quickSearchModal" data-bs-toggle="modal" type="text" placeholder="Quick Links"
+
+  .cm-sidebar__menu-wrapper
+    = navigation_links('sidebar')
+
+    .sidebar-menu__tabs-wrapper
+
+  - if defined?(user_full_name)
+    .sidebar__footer
+      .menu-item data-behaviour="toggle-profile-popup"
+        .profile-name
+          span.profile-avatar #{user_full_name.first.titleize}
+          | #{user_full_name.titleize}
+      .profile-popup.hidden data-behaviour="profile-popup"
+        .profile-info
+          .profile-info__left
+            p.name-text = user_full_name
+            p.email-text = current_user.email
+          .profile-info__right #{user_full_name.first.titleize}
+        .auth-option
+          = button_to destroy_user_session_path, method: :delete, class: 'auth-link', data: { turbo: :false }
+            | Logout
+= render 'layouts/quick_links'

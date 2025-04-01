@@ -1,0 +1,23 @@
+.offcanvas.cm-drawer tabindex="-1" id="cm-drawer" aria-labelledby="offcanvasExampleLabel" data-behavior="cm-drawer" data-from-field-id="#{params[:from_field_id]}"
+  .drawer-btn-group
+    button.drawer-nav-btn type="button" data-bs-dismiss="offcanvas" aria-label="Close"
+      i.fa-solid.fa-x
+  .offcanvas-header
+    h4 = drawer_title
+  .offcanvas-body
+    .form-page
+      .form-page__body
+        .flag-alert.mb-4.hidden data-behavior="flag-alert"
+          p.alert-header
+            span
+              i.fa.fa-exclamation-triangle
+            | Attention
+          .alert-body
+            p.body-title
+              | Error: unable to save #{@ar_object.class.name.downcase}
+            p.body-info
+              ul data-behavior="error-list"
+                - @ar_object.errors.full_messages.each do |error_message|
+                  li = error_message
+        - if @model.present?
+          = generate_form(@ar_object, @model, is_drawer_form: true)

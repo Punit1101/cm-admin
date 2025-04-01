@@ -1,0 +1,58 @@
+.show-page {
+  height: 100vh;
+  overflow: auto;
+
+  &__header {
+    @extend .position-sticky, .top-0, .bg-white;
+    z-index: 5;
+    .tabs {
+      @extend .nav.nav-pills.ms-2;
+      .nav-link {
+        @include font($size: $t4-text, $color: $ink-lighter-clr);
+        border-radius: 0px;
+      }
+      .nav-link.active {
+        color: $brand-color;
+        border-bottom: 3px $brand-color solid;
+        background-color: $white;
+      }
+    }
+  }
+
+  &__inner {
+    padding: 24px;
+    overflow: auto;
+    .section {
+      margin-bottom: 24px;
+      .section-heading {
+        @extend .h6, .fw-semibold;
+        color: $primary-text-clr;
+      }
+      .card-info {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        grid-column-gap: 24px;
+        margin-bottom: 8px;
+        &:nth-last-child(1) {
+          margin-bottom: 0;
+        }
+        &__title {
+          @include font(
+            $size: $t4-text,
+            $color: $primary-text-clr,
+            $weight: 600
+          );
+        }
+        &__label {
+          @include font($size: $t4-text, $color: $ink-lighter-clr);
+        }
+        &__description {
+          @include font($size: $t4-text, $color: $primary-text-clr);
+        }
+      }
+    }
+  }
+  .filters-bar {
+    background-color: $grey-lightest-clr;
+  }
+}
