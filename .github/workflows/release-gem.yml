@@ -95,6 +95,9 @@ jobs:
       - name: Install Dependencies
         run: bundle install --jobs 4 --retry 3
 
+      - name: **Debug Uncommitted Changes Before Release**
+        run: git status --porcelain
+
       - name: **Check for Untracked Files and Commit Before Release**
         run: |
           if [[ $(git status --porcelain) ]]; then
