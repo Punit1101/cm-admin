@@ -54,9 +54,6 @@ jobs:
       - name: Clear Bundler cache
         run: rm -rf vendor/bundle .bundle Gemfile.lock  # Ensure a clean install
 
-      - name: Fix permissions for Ruby gems directory
-        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/
-
       - name: Bundle Install
         run: bundle install --jobs 4 --retry 3  # Retry in case of failures
 
@@ -83,7 +80,7 @@ jobs:
     needs: build
     permissions:
       id-token: write  # Mandatory for trusted publishing
-      contents: write  # Required for `rake release`
+      contents: write  # Required for rake release
 
     steps:
       - name: Checkout repository
