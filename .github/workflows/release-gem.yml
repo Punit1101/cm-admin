@@ -42,11 +42,10 @@ jobs:
           bundler-cache: false  # Avoid caching issues
           ruby-version: "3.3"  # Explicit version for better compatibility
 
-      - name: Configure RubyGems credentials
+      - name: Install Bundler and Dependencies
         run: |
-          mkdir -p ~/.gem
-          echo -e "---\n:rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}" > ~/.gem/credentials
-          chmod 0600 ~/.gem/credentials
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
       - name: Install the gem-release
         run: gem install gem-release
@@ -60,11 +59,8 @@ jobs:
       - name: Clear Bundler cache
         run: rm -rf vendor/bundle .bundle Gemfile.lock  # Ensure a clean install
 
-      - name: Force clean gem install
-        run: |
-          gem install bundler
-          bundle update --bundler
-          bundle install --jobs 4 --retry 3
+      - name: Bundle Install
+        run: bundle install --jobs 4 --retry 3  # Retry in case of failures
 
       - name: Commit Changes Before Pull
         run: |
@@ -106,6 +102,11 @@ jobs:
 
       - name: Remove lock on bundle
         run: bundle config set frozen false
+
+      - name: Install Bundler and Dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
       - uses: rubygems/release-gem@v1
         with:
