@@ -106,10 +106,16 @@ jobs:
           git commit -m "Auto-commit untracked changes before releasing gem" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
 
-      - name: Configure RubyGems Credentials
+      - name: Configure Rubygems Credentials
         run: |
-          gem sources
-          gem credentials
+          mkdir -p ~/.gem
+          echo "---" > ~/.gem/credentials
+          echo ":rubygems_api_key: ${{ secrets.RUBYGEMS_API_KEY }}" >> ~/.gem/credentials
+          chmod 0600 ~/.gem/credentials
+
+      - name: Push the Gem to RubyGems
+        run: |
+          gem push --key rubygems_api_key --host https://rubygems.org pkg/cm-admin-2.4.25.gem
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
