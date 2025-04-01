@@ -42,12 +42,6 @@ jobs:
           bundler-cache: false  # Avoid caching issues
           ruby-version: "3.3"  # Explicit version for better compatibility
 
-      - name: Fix permissions issue
-        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/3.3.7/x64/lib/ruby/gems/3.3.0/gems
-
-      - name: Install Bundler
-        run: gem install bundler
-
       - name: Install the gem-release
         run: gem install gem-release
 
@@ -59,6 +53,9 @@ jobs:
 
       - name: Clear Bundler cache
         run: rm -rf vendor/bundle .bundle Gemfile.lock  # Ensure a clean install
+
+      - name: Fix permissions for Ruby gems directory
+        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/
 
       - name: Bundle Install
         run: bundle install --jobs 4 --retry 3  # Retry in case of failures
