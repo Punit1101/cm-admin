@@ -108,10 +108,8 @@ jobs:
 
       - name: Configure RubyGems Credentials
         run: |
-          mkdir -p ~/.gem
-          echo "---" > ~/.gem/credentials
-          echo ":rubygems_api_key: ${RUBYGEMS_API_KEY}" >> ~/.gem/credentials
-          chmod 0600 ~/.gem/credentials
+          gem sources
+          gem credentials
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
