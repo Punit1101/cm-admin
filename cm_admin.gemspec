@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'CmAdmin is a robust gem designed to assist in creating admin panels for Rails applications'
   spec.description   = 'CmAdmin providing a streamlined and efficient solution for building customized admin panels within the context of Rails applications. Its robust features empower developers to effortlessly generate and manage administrative interfaces with precision and ease.'
-  spec.homepage      = 'https://github.com/commutatus/cm-admin'
+  spec.homepage      = 'https://github.com/Punit1101/cm-admin'
   spec.license       = 'MIT'
   spec.required_ruby_version = '>= 2.7.0'
 
@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata = {
     'homepage_uri' => spec.homepage,
-    'source_code_uri' => 'https://github.com/commutatus/cm-admin'
+    'source_code_uri' => 'https://github.com/Punit1101/cm-admin'
   }
   # spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
 
