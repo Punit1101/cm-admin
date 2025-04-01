@@ -68,8 +68,8 @@ jobs:
     needs: build
 
     permissions:
-      id-token: write  # Mandatory for trusted publishing
-      contents: write  # Required for `rake release`
+      id-token: write
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -78,28 +78,39 @@ jobs:
       - name: Pull Latest Changes
         run: git pull origin main
 
+      - name: Set Git Config
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "$(gh api /users/${GITHUB_ACTOR} | jq .name -r)"
+          git config -l
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
 
-      - name: Fix Permissions for Gem Installation Path
-        run: sudo chmod -R o-w /opt/hostedtoolcache/Ruby/3.3.7/x64/lib/ruby/gems/3.3.0/gems
+      - name: Install gem-release
+        run: gem install gem-release
 
-      - name: Configure Bundler to Use a Secure Local Path
-        run: bundle config set --local path 'vendor/bundle'
+      - name: Bump the gem
+        run: gem bump --version ${{ github.event.inputs.bump_type }} -p
 
-      - name: Preconfigure Nokogiri and Other Gems
-        run: bundle config set force_ruby_platform true
-
-      - name: Install Dependencies
-        run: bundle install --jobs 4 --retry 3
-
-      - name: Commit Any Pending Changes Before Release
+      - name: Pull Latest Changes
         run: |
-          git add .
-          git commit -m "Auto-commit untracked changes before releasing gem" || echo "No changes to commit"
-          git push origin main || echo "No changes to push"
+          git fetch origin main
+          git pull origin main --rebase || echo "Rebase failed, attempting merge"
+          git merge origin/main || echo "Merge failed; manual intervention required"
+
+      - name: Commit Updated Files
+        run: |
+          git add Gemfile.lock lib/cm_admin/version.rb
+          git commit -m "Bump and update Gemfile.lock" || echo "No changes to commit"
+
+      - name: Push Changes
+        run: |
+          git push origin main || (echo "Push failed; retrying after rebase" && git pull origin main --rebase && git push origin main)
 
       - name: Release the Gem
         uses: rubygems/release-gem@v1
